@@ -1,0 +1,32 @@
+{
+  "profiles": {
+    "ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "-a \"checkin\" -e \"development\"",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "dev"
+      }
+    },
+    "dev": {
+      "commandName": "Project",
+      "commandLineArgs": "-a \"checkin\" -e \"development\"",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "dev"
+      }
+    },
+    "test": {
+      "commandName": "Project",
+      "commandLineArgs": "-a \"checkin\" -e \"test\"",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "test"
+      }
+    },
+    "prod": {
+      "commandName": "Project",
+      "commandLineArgs": "-a \"checkin\" -e \"production\"",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "prod"
+      }
+    }
+  }
+}
