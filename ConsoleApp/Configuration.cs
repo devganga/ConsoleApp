@@ -1,21 +1,14 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium.Edge;
-using Microsoft.Extensions.Hosting;
 using consoleApp.AppSettings;
 using consoleApp.Services.Interface;
 using consoleApp.Services;
-using OpenQA.Selenium.Safari;
 using ConsoleApp.AppSettings;
 using ConsoleApp.Security;
 using ConsoleApp.Services;
+using ConsoleApp.Driver;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
 
 namespace consoleApp
 {
@@ -47,11 +40,14 @@ namespace consoleApp
             //Inject Edge Browser Selinium
             //services.AddTransient<IWebDriver, EdgeDriver>();
             //Inject Chrome Browser Selinium 
-            services.AddTransient<IWebDriver, ChromeDriver>();
+            //services.AddTransient<IWebDriver, ChromeDriver>();
             //Inject Safari Browser Selinium 
             //services.AddTransient<IWebDriver, SafariDriver>();
             //Inject firefox Browser Selinium 
             //services.AddTransient<IWebDriver, FirefoxDriver>();
+            services.AddSingleton<IBrowserDriver, BrowserDriver>();
+            services.AddSingleton<IDriverFixture, DriverFixture>();
+           
 
             #endregion
         }
@@ -63,7 +59,8 @@ namespace consoleApp
         /// <param name="services"></param>
         public static void AppSettingsConfig(this IConfiguration hostBuilder, IServiceCollection services)
         {
-            //configure App Config read from appsettings            
+            //configure App Config read from appsettings
+            services.Configure<BrowserOptions>(hostBuilder.GetSection(nameof(BrowserOptions)));
             services.Configure<AdrenalinOptions>(hostBuilder.GetSection(nameof(AdrenalinOptions)));
             services.Configure<SampleOptions>(hostBuilder.GetSection(nameof(SampleOptions)));
             services.Configure<EndpointOptions>(hostBuilder.GetSection(nameof(EndpointOptions)));
@@ -73,11 +70,12 @@ namespace consoleApp
         }
 
         public static void DepandancyInjectionConfig(this IServiceCollection services)
-        {
+        {          
             //Register Api Http Client
             services.AddTransient(typeof(IHttpClientHelper<>), typeof(HttpClientHelper<>));
 
-            services.AddSingleton<IApplicationConfigService,ApplicationConfigService>();
+            services.AddSingleton<IHttpClientService, HttpClientService>();
+            services.AddSingleton<IApplicationConfigService, ApplicationConfigService>();
 
             services.AddTransient<ITempFileService, TempFileService>();
 

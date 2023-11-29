@@ -1,4 +1,5 @@
 ﻿using ConsoleApp.AppSettings;
+using ConsoleApp.Helpers;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace ConsoleApp.Services
     public class FileSecureService : IFileSecureService
     {
         private readonly EncryptOptions options;
+        
+
         public FileSecureService(IOptions<EncryptOptions> options)
         {
             this.options = options.Value;

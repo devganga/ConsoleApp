@@ -12,14 +12,14 @@ namespace ConsoleApp.AppSettings
         //public int SpecialFolder { get; set; }
         //public string? TempFolderPath { get; set; } = Path.GetTempPath();
         //public string? ApplicationDataPath { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public static string? GetTempFileName()
+        public static string GetTempFileName()
         {
             return Path.GetTempFileName();
         }
         public string GetApplicationTempPath()
         {
             var path = Path.Combine(Path.GetTempPath(), FolderName!);
-            Directory.CreateDirectory(path);
+            //Directory.CreateDirectory(path);
             return path;
 
             //return FolderName == null
@@ -29,7 +29,7 @@ namespace ConsoleApp.AppSettings
         public string GetApplicationDataPath()
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), FolderName!);
-            Directory.CreateDirectory(path);
+            //Directory.CreateDirectory(path);
             return path;
 
             //return FolderName == null

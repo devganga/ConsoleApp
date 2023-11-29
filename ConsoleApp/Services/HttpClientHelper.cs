@@ -24,6 +24,7 @@ namespace consoleApp.Services
             cookies.Add(uri, new Cookie("71e940f10481cd4f86700a492f012d7d", "360bc58f212cda6c3510f0a3c7fedab4")); // Adding a Cookie
             cookies.Add(uri, new Cookie("BIGipServerw.vidagateway-prod.volvocars.biz.new.80.pool", "1305030922.20480.0000")); // Adding a Cookie
 
+            //var set = Lazy<JsonSerializerSettings>();
             Client = new(new HttpClientHandler() { CookieContainer = cookies });
         }
 

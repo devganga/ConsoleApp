@@ -50,29 +50,50 @@ namespace ConsoleApp.Services
             // Note that the GetTempFileName() method actually creates
             // a 0-byte file and returns the name of the created file.
             var filePath = Path.Combine(_applicationDataOptions.GetApplicationTempPath(), $"{fileName}.{fileExtension}");
-            File.Create(filePath);
-            _logger.LogInformation($"File created : {filePath}");
-            // Craete a FileInfo object to set the file's attributes
-            FileInfo fileInfo = new FileInfo(filePath);
 
+            //using (var fs = File.Create(filePath))
+            //{
+            //    //
+            //    //fs.cop
+            //}
+
+          
+            // Craete a FileInfo object to set the file's attributes
+            FileInfo fileInfo = new FileInfo(fileName);
+            fileInfo.Create();
             // Set the Attribute property of this file to Temporary. 
             // Although this is not completely necessary, the .NET Framework is able 
             // to optimize the use of Temporary files by keeping them cached in memory.
             fileInfo.Attributes = FileAttributes.Temporary;
+
+            //StreamWriter streamWriter = File.AppendText(fileName);
+            ////streamWriter.WriteLine(content);
+            //streamWriter.Flush();
+            //streamWriter.Close();
+
+            _logger.LogInformation($"File created : {filePath}");
+            // Craete a FileInfo object to set the file's attributes
+            //FileInfo fileInfo = new FileInfo(filePath);
+
+            
+            // Set the Attribute property of this file to Temporary. 
+            // Although this is not completely necessary, the .NET Framework is able 
+            // to optimize the use of Temporary files by keeping them cached in memory.
+            //fileInfo.Attributes = FileAttributes.Temporary;
             _logger.LogInformation($"Set File Attributes Temporary : {filePath}");
             watch.Stop();
             _logger.LogInformation($"Created TempFile '{filePath}' in {watch.ElapsedMilliseconds} ms");
             return await Task.FromResult(filePath);
         }
         public async Task<bool> UpdateAsync(string fileName, string content)
-        {
+        {            
             var watch = Stopwatch.StartNew();
-            _logger.LogInformation($"updating File {fileName} with content : {content}");
+            _logger.LogInformation($"updating File {fileName} with content");
             StreamWriter streamWriter = File.AppendText(fileName);
             streamWriter.WriteLine(content);
             streamWriter.Flush();
             streamWriter.Close();
-            _logger.LogInformation($"updated File {fileName} with content : {content}");
+            _logger.LogInformation($"updated File {fileName} with content");
             watch.Stop();
             _logger.LogInformation($"updated TempFile '{fileName}' in {watch.ElapsedMilliseconds} ms");
             return await Task.FromResult(true);

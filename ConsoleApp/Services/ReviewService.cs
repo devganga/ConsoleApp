@@ -29,6 +29,7 @@ namespace consoleApp.Services
                 var review = new Review { Author = "test", Title = $"Title{x}", Rating = 3 };
                 await httpClient.PostRequest("http://localhost:5007/api/Reviews", review, default);
             });
+            await Task.CompletedTask;
             //return await Task.CompletedTask;
             //return await Task.FromResult(0);
             //throw new NotImplementedException();

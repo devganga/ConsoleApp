@@ -7,12 +7,27 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Helpers
 {
-    public class CookieHelper
+    public sealed class CookieHelper
     {
-        public CookieContainer CookieContainer { get; set; }
-        public CookieHelper()
+        //public CookieContainer CookieContainer { get; set; }
+
+        private static readonly Lazy<CookieHelper> _lazy = new Lazy<CookieHelper>(() => new CookieHelper());
+
+        public static CookieHelper Instance
         {
-            CookieContainer = new CookieContainer();
+            get { return _lazy.Value; }
+        }
+        private CookieHelper()
+        {
+            //CookieContainer = new CookieContainer();
+        }
+
+        public bool IsValueCreated
+        {
+            get
+            {
+                return _lazy.IsValueCreated;
+            }
         }
 
     }
